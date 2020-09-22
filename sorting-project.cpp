@@ -16,12 +16,12 @@ https://github.com/NickGreiner/CSC-2710-Sorting-Project
 
 using namespace std;
 
-void selectionSort();
-void bubbleSort();
-void insertionSort();
-void mergeSort();
-void quickSort();
-void heapSort();
+void selectionSort(vector<int> &dataset);
+void bubbleSort(vector<int> &dataset);
+void insertionSort(vector<int> &dataset);
+void mergeSort(vector<int> &dataset);
+void quickSort(vector<int> &dataset);
+void heapSort(vector<int> &dataset);
 
 void loadDataset(vector<int> &dataset);
 
