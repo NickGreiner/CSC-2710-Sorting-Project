@@ -11,8 +11,7 @@ Description:  Program to to measure the time and number of basic
 https://github.com/NickGreiner/CSC-2710-Sorting-Project
 */
 
-#include<stdio>
-#include<stdlib.h>
+#include<iostream>
 #include<vector>
 
 using namespace std;
