@@ -1,5 +1,6 @@
 /*
-Names:  Nick Greiner, Matt Ray, Brysen Allen, Sam Mycroft
+Name: Sorting Project
+Authors:  Nick Greiner, Matt Ray, Brysen Allen, Sam Mycroft
 Class:  CSC-2710-01
 Date:   9/22/2020
 
