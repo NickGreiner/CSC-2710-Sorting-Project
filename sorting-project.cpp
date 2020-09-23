@@ -11,12 +11,15 @@ Description:  Program to to measure the time and number of basic
 https://github.com/NickGreiner/CSC-2710-Sorting-Project
 */
 
-#include<iostream>
-#include<vector>
-#include<chrono>
+#include <iostream>
+#include <vector>
+#include <chrono>
+#include <fstream>
+#include <string>
+#include <algorithm>
+#include <iterator>
 
 using namespace std;
-using namespace std::chrono;
 
 void selectionSort(vector<int> &dataset);
 void bubbleSort(vector<int> &dataset);
@@ -79,4 +82,64 @@ int main() {
   }
 
   return 0;
+}
+
+void selectionSort(vector<int> &dataset) {
+  int i = 0;
+}
+
+void bubbleSort(vector<int> &dataset) {
+  int i = 0;
+}
+
+void insertionSort(vector<int> &dataset) {
+  int i = 0;
+}
+
+void mergeSort(vector<int> &dataset) {
+  int i = 0;
+}
+
+void quickSort(vector<int> &dataset) {
+  int i = 0;
+}
+
+void heapSort(vector<int> &dataset) {
+  int i = 0;
+}
+
+vector<int> loadDataset(string datafile) {
+  ifstream is(datafile);
+  istream_iterator<int> start(is), end;
+  vector<int> numbers(start, end);
+  cout << "Read " << numbers.size() << " numbers" << endl;
+
+  // print the numbers to stdout
+  cout << "Current dataset:\n";
+  copy(numbers.begin(), numbers.end(),
+            ostream_iterator<int>(cout, " "));
+  cout << endl;
+
+  return numbers;
+}
+
+void runTimeTest(vector<int> &dataset, int algoNum) {
+  using namespace std::chrono;
+
+  string algoName;
+
+  auto start = high_resolution_clock::now();
+
+  if (algoNum == 0){algoName = "selection sort"; selectionSort(dataset);}
+  else if (algoNum == 1){algoName = "bubble sort"; bubbleSort(dataset);}
+  else if (algoNum == 2){algoName = "insertion sort"; insertionSort(dataset);}
+  else if (algoNum == 3){algoName = "merge sort"; mergeSort(dataset);}
+  else if (algoNum == 4){algoName = "quick sort"; quickSort(dataset);}
+  else if (algoNum == 5){algoName = "heap sort"; heapSort(dataset);}
+
+  auto stop = high_resolution_clock::now();
+
+  auto duration = duration_cast<microseconds>(stop - start);
+
+  cout << "Time taken by " << algoName << ": " << duration.count() << " microseconds" << endl;
 }
