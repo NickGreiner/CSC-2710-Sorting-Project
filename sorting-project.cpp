@@ -42,38 +42,52 @@ int main() {
   cin >> datafile;
   cout << endl;
 
+  if (datafile == "1") {datafile = "almost-sorted";}
+
   dataset = loadDataset(datafile);
 
   for (int x = 0; x < 6; x++){
     runTimeTest(dataset, x);
   }
+
+  cout << endl;
 
   // Randomly Distributed
   cout << "Enter randomly distributed dataset: ";
   cin >> datafile;
   cout << endl;
 
+  if (datafile == "1") {datafile = "randomly-distributed";}
+
   dataset = loadDataset(datafile);
 
   for (int x = 0; x < 6; x++){
     runTimeTest(dataset, x);
   }
+
+  cout << endl;
 
   // Reverse Sorted
   cout << "Enter reverse sorted dataset: ";
   cin >> datafile;
   cout << endl;
 
+  if (datafile == "1") {datafile = "reverse-sorted";}
+
   dataset = loadDataset(datafile);
 
   for (int x = 0; x < 6; x++){
     runTimeTest(dataset, x);
   }
 
+  cout << endl;
+
   // Duplicates
   cout << "Enter duplicates dataset: ";
   cin >> datafile;
   cout << endl;
+
+  if (datafile == "1") {datafile = "duplicates";}
 
   dataset = loadDataset(datafile);
 
@@ -85,27 +99,27 @@ int main() {
 }
 
 void selectionSort(vector<int> &dataset) {
-  int i = 0;
+  vector<int> testSet = dataset;
 }
 
 void bubbleSort(vector<int> &dataset) {
-  int i = 0;
+  vector<int> testSet = dataset;
 }
 
 void insertionSort(vector<int> &dataset) {
-  int i = 0;
+  vector<int> testSet = dataset;
 }
 
 void mergeSort(vector<int> &dataset) {
-  int i = 0;
+  vector<int> testSet = dataset;
 }
 
 void quickSort(vector<int> &dataset) {
-  int i = 0;
+  vector<int> testSet = dataset;
 }
 
 void heapSort(vector<int> &dataset) {
-  int i = 0;
+  vector<int> testSet = dataset;
 }
 
 vector<int> loadDataset(string datafile) {
@@ -118,7 +132,7 @@ vector<int> loadDataset(string datafile) {
   cout << "Current dataset:\n";
   copy(numbers.begin(), numbers.end(),
             ostream_iterator<int>(cout, " "));
-  cout << endl;
+  cout << endl << endl;
 
   return numbers;
 }
