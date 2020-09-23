@@ -116,6 +116,15 @@ void selectionSort(vector<int> &dataset) {
 
 void bubbleSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+
+  int n = testSet.size();
+  int i, j;
+
+  for (i = 0; i < n-1; i++) {
+    for (j = 0; j < n-i-1; j++)
+      if (testSet[j] > testSet[j+1])
+        swap(testSet[j], testSet[j+1]);
+  }
 }
 
 void insertionSort(vector<int> &dataset) {
@@ -140,7 +149,7 @@ vector<int> loadDataset(string datafile) {
   vector<int> numbers(start, end);
   cout << "Read " << numbers.size() << " numbers" << endl;
 
-  cout << "Current dataset: (" << datafile << ")\n";
+  cout << "Current dataset: (" << datafile << ")\n\n";
 
   return numbers;
 }
