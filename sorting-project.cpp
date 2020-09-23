@@ -129,6 +129,20 @@ void bubbleSort(vector<int> &dataset) {
 
 void insertionSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+
+  int n = testSet.size();
+  int i, key, j;
+
+  for (i = 1; i < n; i++) {
+    key = testSet[i];
+    j = i - 1;
+
+    while (j >= 0 && testSet[j] > key) {
+      testSet[j + 1] = testSet[j];
+      j = j - 1;
+    }
+    testSet[j + 1] = key;
+  }
 }
 
 void mergeSort(vector<int> &dataset) {
