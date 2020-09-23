@@ -140,11 +140,7 @@ vector<int> loadDataset(string datafile) {
   vector<int> numbers(start, end);
   cout << "Read " << numbers.size() << " numbers" << endl;
 
-  // print the numbers to stdout
   cout << "Current dataset: (" << datafile << ")\n";
-  copy(numbers.begin(), numbers.end(),
-            ostream_iterator<int>(cout, " "));
-  cout << endl << endl;
 
   return numbers;
 }
