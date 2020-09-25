@@ -27,7 +27,7 @@ vector<int> bubbleSort(vector<int> &dataset);
 vector<int> insertionSort(vector<int> &dataset);
 vector<int> mergeSort(vector<int> &dataset);
 vector<int> quickSort(vector<int> &dataset);
-void heapSort(vector<int> &dataset);
+vector<int> heapSort(vector<int> &dataset);
 
 // Dataset load function
 vector<int> loadDataset(string datafile);
@@ -39,6 +39,7 @@ void runTimeTest(vector<int> &dataset, int algoNum);
 vector<int> merge(vector<int> left, vector<int> right);
 void qs(vector<int> &values, int left, int right);
 int partition(vector<int> &values, int left, int right);
+void heapify(vector<int> &testSet, int n, int i);
 
 // Store for sorted sets
 vector<int> sortedSets[6];
@@ -61,7 +62,7 @@ int main() {
     runTimeTest(dataset, x);
   }
 
-  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4])) {
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4]) && (sortedSets[4] != sortedSets[5])) {
     cout << "Sorting error" << endl;
   }
 
@@ -80,7 +81,7 @@ int main() {
     runTimeTest(dataset, x);
   }
 
-  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4])) {
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4]) && (sortedSets[4] != sortedSets[5])) {
     cout << "Sorting error" << endl;
   }
 
@@ -99,7 +100,7 @@ int main() {
     runTimeTest(dataset, x);
   }
 
-  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4])) {
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4]) && (sortedSets[4] != sortedSets[5])) {
     cout << "Sorting error" << endl;
   }
 
@@ -118,7 +119,7 @@ int main() {
     runTimeTest(dataset, x);
   }
 
-  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4])) {
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4]) && (sortedSets[4] != sortedSets[5])) {
     cout << "Sorting error" << endl;
   }
 
@@ -197,8 +198,21 @@ vector<int> quickSort(vector<int> &dataset) {
   return testSet;
 }
 
-void heapSort(vector<int> &dataset) {
+vector<int> heapSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+
+  int n = testSet.size();
+
+  for (int i = n / 2 - 1; i >= 0; i--)
+    heapify(testSet, n, i);
+
+  for (int i=n-1; i>0; i--) {
+    swap(testSet[0], testSet[i]);
+
+    heapify(testSet, i, 0);
+  }
+
+  return testSet;
 }
 
 vector<int> loadDataset(string datafile) {
@@ -224,7 +238,7 @@ void runTimeTest(vector<int> &dataset, int algoNum) {
   else if (algoNum == 2){algoName = "insertion sort"; sortedSets[algoNum] = insertionSort(dataset);}
   else if (algoNum == 3){algoName = "merge sort"; sortedSets[algoNum] = mergeSort(dataset);}
   else if (algoNum == 4){algoName = "quick sort"; sortedSets[algoNum] = quickSort(dataset);}
-  else if (algoNum == 5){algoName = "heap sort"; heapSort(dataset);}
+  else if (algoNum == 5){algoName = "heap sort"; sortedSets[algoNum] = heapSort(dataset);}
 
   auto stop = high_resolution_clock::now();
 
@@ -275,4 +289,24 @@ int partition(vector<int> &values, int left, int right) {
         }
     }
     return i;
+}
+
+void heapify(vector<int> &testSet, int n, int i)
+{
+    int largest = i;
+    int l = 2*i + 1;
+    int r = 2*i + 2;
+
+    if (l < n && testSet[l] > testSet[largest])
+        largest = l;
+
+    if (r < n && testSet[r] > testSet[largest])
+        largest = r;
+
+    if (largest != i)
+    {
+        swap(testSet[i], testSet[largest]);
+
+        heapify(testSet, n, largest);
+    }
 }
