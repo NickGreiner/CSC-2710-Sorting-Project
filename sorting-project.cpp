@@ -24,13 +24,15 @@ using namespace std;
 void selectionSort(vector<int> &dataset);
 void bubbleSort(vector<int> &dataset);
 void insertionSort(vector<int> &dataset);
-void mergeSort(vector<int> &dataset);
+vector<int> mergeSort(vector<int> &dataset);
 void quickSort(vector<int> &dataset);
 void heapSort(vector<int> &dataset);
 
 vector<int> loadDataset(string datafile);
 
 void runTimeTest(vector<int> &dataset, int algoNum);
+
+vector<int> merge(vector<int> left, vector<int> right);
 
 int main() {
 
@@ -145,8 +147,15 @@ void insertionSort(vector<int> &dataset) {
   }
 }
 
-void mergeSort(vector<int> &dataset) {
+vector<int> mergeSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+
+  if (testSet.size() <= 1)
+    return testSet;
+  int len = testSet.size() / 2;
+  vector<int> left (testSet.begin(), testSet.begin() + len);
+  vector<int> right(testSet.begin() + len, testSet.end());
+  return merge(mergeSort(left), mergeSort(right));
 }
 
 void quickSort(vector<int> &dataset) {
@@ -173,12 +182,14 @@ void runTimeTest(vector<int> &dataset, int algoNum) {
 
   string algoName;
 
+  vector<int> sortedSet;
+
   auto start = high_resolution_clock::now();
 
   if (algoNum == 0){algoName = "selection sort"; selectionSort(dataset);}
   else if (algoNum == 1){algoName = "bubble sort"; bubbleSort(dataset);}
   else if (algoNum == 2){algoName = "insertion sort"; insertionSort(dataset);}
-  else if (algoNum == 3){algoName = "merge sort"; mergeSort(dataset);}
+  else if (algoNum == 3){algoName = "merge sort"; sortedSet = mergeSort(dataset);}
   else if (algoNum == 4){algoName = "quick sort"; quickSort(dataset);}
   else if (algoNum == 5){algoName = "heap sort"; heapSort(dataset);}
 
@@ -187,4 +198,17 @@ void runTimeTest(vector<int> &dataset, int algoNum) {
   auto duration = duration_cast<microseconds>(stop - start);
 
   cout << "Time taken by " << algoName << ": " << duration.count() << " microseconds" << endl;
+}
+
+vector<int> merge(vector<int> left, vector<int> right) {
+	size_t ileft = 0, iright = 0;
+	vector<int> results;
+	while (ileft < left.size() && iright < right.size())
+	  if (left[ileft] < right[iright])
+	    results.push_back(left[ileft++]);
+	  else
+	    results.push_back(right[iright++]);
+	while (ileft  < left.size() ) results.push_back(left [ileft++ ]);
+	while (iright < right.size()) results.push_back(right[iright++]);
+	return results;
 }
