@@ -21,19 +21,26 @@ https://github.com/NickGreiner/CSC-2710-Sorting-Project
 
 using namespace std;
 
+// Sorting Functions
 vector<int> selectionSort(vector<int> &dataset);
 vector<int> bubbleSort(vector<int> &dataset);
 vector<int> insertionSort(vector<int> &dataset);
 vector<int> mergeSort(vector<int> &dataset);
-void quickSort(vector<int> &dataset);
+vector<int> quickSort(vector<int> &dataset);
 void heapSort(vector<int> &dataset);
 
+// Dataset load function
 vector<int> loadDataset(string datafile);
 
+// Time Test Function
 void runTimeTest(vector<int> &dataset, int algoNum);
 
+// Functions used in recursive sort functions
 vector<int> merge(vector<int> left, vector<int> right);
+void qs(vector<int> &values, int left, int right);
+int partition(vector<int> &values, int left, int right);
 
+// Store for sorted sets
 vector<int> sortedSets[6];
 
 int main() {
@@ -54,7 +61,7 @@ int main() {
     runTimeTest(dataset, x);
   }
 
-  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[1])) {
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4])) {
     cout << "Sorting error" << endl;
   }
 
@@ -73,7 +80,7 @@ int main() {
     runTimeTest(dataset, x);
   }
 
-  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[1])) {
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4])) {
     cout << "Sorting error" << endl;
   }
 
@@ -92,7 +99,7 @@ int main() {
     runTimeTest(dataset, x);
   }
 
-  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[1])) {
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4])) {
     cout << "Sorting error" << endl;
   }
 
@@ -111,7 +118,7 @@ int main() {
     runTimeTest(dataset, x);
   }
 
-  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[1])) {
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4])) {
     cout << "Sorting error" << endl;
   }
 
@@ -182,8 +189,12 @@ vector<int> mergeSort(vector<int> &dataset) {
   return merge(mergeSort(left), mergeSort(right));
 }
 
-void quickSort(vector<int> &dataset) {
+vector<int> quickSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+
+  qs(testSet, 0, testSet.size() - 1);
+
+  return testSet;
 }
 
 void heapSort(vector<int> &dataset) {
@@ -212,7 +223,7 @@ void runTimeTest(vector<int> &dataset, int algoNum) {
   else if (algoNum == 1){algoName = "bubble sort"; sortedSets[algoNum] = bubbleSort(dataset);}
   else if (algoNum == 2){algoName = "insertion sort"; sortedSets[algoNum] = insertionSort(dataset);}
   else if (algoNum == 3){algoName = "merge sort"; sortedSets[algoNum] = mergeSort(dataset);}
-  else if (algoNum == 4){algoName = "quick sort"; quickSort(dataset);}
+  else if (algoNum == 4){algoName = "quick sort"; sortedSets[algoNum] = quickSort(dataset);}
   else if (algoNum == 5){algoName = "heap sort"; heapSort(dataset);}
 
   auto stop = high_resolution_clock::now();
@@ -233,4 +244,35 @@ vector<int> merge(vector<int> left, vector<int> right) {
 	while (ileft  < left.size() ) results.push_back(left [ileft++ ]);
 	while (iright < right.size()) results.push_back(right[iright++]);
 	return results;
+}
+
+void qs(vector<int> &values, int left, int right) {
+    if(left < right) {
+        int pivotIndex = partition(values, left, right);
+        qs(values, left, pivotIndex - 1);
+        qs(values, pivotIndex, right);
+    }
+}
+
+int partition(vector<int> &values, int left, int right) {
+    int pivotIndex = left + (right - left) / 2;
+    int pivotValue = values[pivotIndex];
+    int i = left, j = right;
+    int temp;
+    while(i <= j) {
+        while(values[i] < pivotValue) {
+            i++;
+        }
+        while(values[j] > pivotValue) {
+            j--;
+        }
+        if(i <= j) {
+            temp = values[i];
+            values[i] = values[j];
+            values[j] = temp;
+            i++;
+            j--;
+        }
+    }
+    return i;
 }
