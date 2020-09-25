@@ -21,9 +21,9 @@ https://github.com/NickGreiner/CSC-2710-Sorting-Project
 
 using namespace std;
 
-void selectionSort(vector<int> &dataset);
-void bubbleSort(vector<int> &dataset);
-void insertionSort(vector<int> &dataset);
+vector<int> selectionSort(vector<int> &dataset);
+vector<int> bubbleSort(vector<int> &dataset);
+vector<int> insertionSort(vector<int> &dataset);
 vector<int> mergeSort(vector<int> &dataset);
 void quickSort(vector<int> &dataset);
 void heapSort(vector<int> &dataset);
@@ -33,6 +33,8 @@ vector<int> loadDataset(string datafile);
 void runTimeTest(vector<int> &dataset, int algoNum);
 
 vector<int> merge(vector<int> left, vector<int> right);
+
+vector<int> sortedSets[6];
 
 int main() {
 
@@ -52,6 +54,10 @@ int main() {
     runTimeTest(dataset, x);
   }
 
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[1])) {
+    cout << "Sorting error" << endl;
+  }
+
   cout << endl;
 
   // Randomly Distributed
@@ -65,6 +71,10 @@ int main() {
 
   for (int x = 0; x < 6; x++){
     runTimeTest(dataset, x);
+  }
+
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[1])) {
+    cout << "Sorting error" << endl;
   }
 
   cout << endl;
@@ -82,6 +92,10 @@ int main() {
     runTimeTest(dataset, x);
   }
 
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[1])) {
+    cout << "Sorting error" << endl;
+  }
+
   cout << endl;
 
   // Duplicates
@@ -97,10 +111,14 @@ int main() {
     runTimeTest(dataset, x);
   }
 
+  if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[1])) {
+    cout << "Sorting error" << endl;
+  }
+
   return 0;
 }
 
-void selectionSort(vector<int> &dataset) {
+vector<int> selectionSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
 
   int n = testSet.size();
@@ -114,9 +132,11 @@ void selectionSort(vector<int> &dataset) {
 
     swap(testSet[min_idx], testSet[i]);
   }
+
+  return testSet;
 }
 
-void bubbleSort(vector<int> &dataset) {
+vector<int> bubbleSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
 
   int n = testSet.size();
@@ -127,9 +147,11 @@ void bubbleSort(vector<int> &dataset) {
       if (testSet[j] > testSet[j+1])
         swap(testSet[j], testSet[j+1]);
   }
+
+  return testSet;
 }
 
-void insertionSort(vector<int> &dataset) {
+vector<int> insertionSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
 
   int n = testSet.size();
@@ -145,6 +167,8 @@ void insertionSort(vector<int> &dataset) {
     }
     testSet[j + 1] = key;
   }
+
+  return testSet;
 }
 
 vector<int> mergeSort(vector<int> &dataset) {
@@ -182,14 +206,12 @@ void runTimeTest(vector<int> &dataset, int algoNum) {
 
   string algoName;
 
-  vector<int> sortedSet;
-
   auto start = high_resolution_clock::now();
 
-  if (algoNum == 0){algoName = "selection sort"; selectionSort(dataset);}
-  else if (algoNum == 1){algoName = "bubble sort"; bubbleSort(dataset);}
-  else if (algoNum == 2){algoName = "insertion sort"; insertionSort(dataset);}
-  else if (algoNum == 3){algoName = "merge sort"; sortedSet = mergeSort(dataset);}
+  if (algoNum == 0){algoName = "selection sort"; sortedSets[algoNum] = selectionSort(dataset);}
+  else if (algoNum == 1){algoName = "bubble sort"; sortedSets[algoNum] = bubbleSort(dataset);}
+  else if (algoNum == 2){algoName = "insertion sort"; sortedSets[algoNum] = insertionSort(dataset);}
+  else if (algoNum == 3){algoName = "merge sort"; sortedSets[algoNum] = mergeSort(dataset);}
   else if (algoNum == 4){algoName = "quick sort"; quickSort(dataset);}
   else if (algoNum == 5){algoName = "heap sort"; heapSort(dataset);}
 
