@@ -29,8 +29,9 @@ vector<int> mergeSort(vector<int> &dataset);
 vector<int> quickSort(vector<int> &dataset);
 vector<int> heapSort(vector<int> &dataset);
 
-// Dataset load function
+// Functions to load / write datasets
 vector<int> loadDataset(string datafile);
+void writeDataset(string datafile);
 
 // Time Test Function
 void runTimeTest(vector<int> &dataset, int algoNum);
@@ -54,7 +55,7 @@ int main() {
   cin >> datafile;
   cout << endl;
 
-  if (datafile == "1") {datafile = "almost-sorted";}
+  if (datafile == "1") {datafile = "almost";}
 
   dataset = loadDataset(datafile);
 
@@ -65,6 +66,8 @@ int main() {
   if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4]) && (sortedSets[4] != sortedSets[5])) {
     cout << "Sorting error" << endl;
   }
+
+  writeDataset(datafile);
 
   cout << endl;
 
@@ -73,7 +76,7 @@ int main() {
   cin >> datafile;
   cout << endl;
 
-  if (datafile == "1") {datafile = "randomly-distributed";}
+  if (datafile == "1") {datafile = "random";}
 
   dataset = loadDataset(datafile);
 
@@ -84,6 +87,8 @@ int main() {
   if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4]) && (sortedSets[4] != sortedSets[5])) {
     cout << "Sorting error" << endl;
   }
+
+  writeDataset(datafile);
 
   cout << endl;
 
@@ -92,7 +97,7 @@ int main() {
   cin >> datafile;
   cout << endl;
 
-  if (datafile == "1") {datafile = "reverse-sorted";}
+  if (datafile == "1") {datafile = "reverse";}
 
   dataset = loadDataset(datafile);
 
@@ -103,6 +108,8 @@ int main() {
   if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4]) && (sortedSets[4] != sortedSets[5])) {
     cout << "Sorting error" << endl;
   }
+
+  writeDataset(datafile);
 
   cout << endl;
 
@@ -122,6 +129,8 @@ int main() {
   if ((sortedSets[0] != sortedSets[1]) && (sortedSets[1] != sortedSets[2]) && (sortedSets[2] != sortedSets[3]) && (sortedSets[3] != sortedSets[4]) && (sortedSets[4] != sortedSets[5])) {
     cout << "Sorting error" << endl;
   }
+
+  writeDataset(datafile);
 
   return 0;
 }
@@ -224,6 +233,43 @@ vector<int> loadDataset(string datafile) {
   cout << "Current dataset: (" << datafile << ")\n\n";
 
   return numbers;
+}
+
+void writeDataset(string datafile) {
+  ofstream writeFile;
+  writeFile.open(datafile + "-SORTED");
+
+  writeFile << "Selection Sort:" << endl;
+  for(int i=0; i < sortedSets[0].size(); i++)
+    writeFile << sortedSets[0].at(i) << ' ';
+  writeFile << endl << endl;
+
+  writeFile << "Bubble Sort:" << endl;
+  for(int i=0; i < sortedSets[1].size(); i++)
+    writeFile << sortedSets[1].at(i) << ' ';
+  writeFile << endl << endl;
+
+  writeFile << "Insertion Sort:" << endl;
+  for(int i=0; i < sortedSets[2].size(); i++)
+    writeFile << sortedSets[2].at(i) << ' ';
+  writeFile << endl << endl;
+
+  writeFile << "Merge Sort:" << endl;
+  for(int i=0; i < sortedSets[3].size(); i++)
+    writeFile << sortedSets[3].at(i) << ' ';
+  writeFile << endl << endl;
+
+  writeFile << "Quick Sort:" << endl;
+  for(int i=0; i < sortedSets[4].size(); i++)
+    writeFile << sortedSets[4].at(i) << ' ';
+  writeFile << endl << endl;
+
+  writeFile << "Heap Sort:" << endl;
+  for(int i=0; i < sortedSets[5].size(); i++)
+    writeFile << sortedSets[5].at(i) << ' ';
+  writeFile << endl << endl;
+
+  writeFile.close();
 }
 
 void runTimeTest(vector<int> &dataset, int algoNum) {
