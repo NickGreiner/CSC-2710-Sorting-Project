@@ -45,6 +45,12 @@ void heapify(vector<int> &testSet, int n, int i);
 // Store for sorted sets
 vector<int> sortedSets[6];
 
+// Store for number of compares
+int compares;
+
+// Store for number of swaps
+int swaps;
+
 int main() {
 
   string datafile;
@@ -137,6 +143,8 @@ int main() {
 
 vector<int> selectionSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+  compares = 0;
+  swaps = 0;
 
   int n = testSet.size();
   int i, j, min_idx;
@@ -144,10 +152,13 @@ vector<int> selectionSort(vector<int> &dataset) {
   for (i = 0; i < n-1; i++) {
     min_idx = i;
     for (j = i+1; j < n; j++)
-    if (testSet[j] < testSet[min_idx])
+    if (testSet[j] < testSet[min_idx]) {
         min_idx = j;
+        compares++;
+    }
 
     swap(testSet[min_idx], testSet[i]);
+    swaps++;
   }
 
   return testSet;
@@ -155,14 +166,19 @@ vector<int> selectionSort(vector<int> &dataset) {
 
 vector<int> bubbleSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+  compares = 0;
+  swaps = 0;
 
   int n = testSet.size();
   int i, j;
 
   for (i = 0; i < n-1; i++) {
     for (j = 0; j < n-i-1; j++)
-      if (testSet[j] > testSet[j+1])
+      if (testSet[j] > testSet[j+1]) {
+        compares++;
         swap(testSet[j], testSet[j+1]);
+        swaps++;
+      }
   }
 
   return testSet;
@@ -170,6 +186,8 @@ vector<int> bubbleSort(vector<int> &dataset) {
 
 vector<int> insertionSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+  compares = 0;
+  swaps = 0;
 
   int n = testSet.size();
   int i, key, j;
@@ -179,10 +197,13 @@ vector<int> insertionSort(vector<int> &dataset) {
     j = i - 1;
 
     while (j >= 0 && testSet[j] > key) {
+      compares++;
       testSet[j + 1] = testSet[j];
+      swaps++;
       j = j - 1;
     }
     testSet[j + 1] = key;
+    swaps++;
   }
 
   return testSet;
@@ -190,6 +211,8 @@ vector<int> insertionSort(vector<int> &dataset) {
 
 vector<int> mergeSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+  compares = 0;
+  swaps = 0;
 
   if (testSet.size() <= 1)
     return testSet;
@@ -201,6 +224,8 @@ vector<int> mergeSort(vector<int> &dataset) {
 
 vector<int> quickSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+  compares = 0;
+  swaps = 0;
 
   qs(testSet, 0, testSet.size() - 1);
 
@@ -209,6 +234,8 @@ vector<int> quickSort(vector<int> &dataset) {
 
 vector<int> heapSort(vector<int> &dataset) {
   vector<int> testSet = dataset;
+  compares = 0;
+  swaps = 0;
 
   int n = testSet.size();
 
@@ -291,6 +318,8 @@ void runTimeTest(vector<int> &dataset, int algoNum) {
   auto duration = duration_cast<microseconds>(stop - start);
 
   cout << "Time taken by " << algoName << ": " << duration.count() << " microseconds" << endl;
+  cout << "Compares taken by " << algoName << ": " << to_string(compares) << " compares" << endl;
+  cout << "Swaps taken by " << algoName << ": " << to_string(swaps) << " swaps" << endl << endl;;
 }
 
 vector<int> merge(vector<int> left, vector<int> right) {
