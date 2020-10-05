@@ -217,7 +217,7 @@ vector<int> mergeSort(vector<int> &dataset) {
   if (testSet.size() <= 1)
     return testSet;
   int len = testSet.size() / 2;
-  vector<int> left (testSet.begin(), testSet.begin() + len);
+  vector<int> left(testSet.begin(), testSet.begin() + len);
   vector<int> right(testSet.begin() + len, testSet.end());
   return merge(mergeSort(left), mergeSort(right));
 }
@@ -244,6 +244,7 @@ vector<int> heapSort(vector<int> &dataset) {
 
   for (int i=n-1; i>0; i--) {
     swap(testSet[0], testSet[i]);
+    swaps++;
 
     heapify(testSet, i, 0);
   }
@@ -325,13 +326,24 @@ void runTimeTest(vector<int> &dataset, int algoNum) {
 vector<int> merge(vector<int> left, vector<int> right) {
 	size_t ileft = 0, iright = 0;
 	vector<int> results;
-	while (ileft < left.size() && iright < right.size())
+	while (ileft < left.size() && iright < right.size()) {
 	  if (left[ileft] < right[iright])
 	    results.push_back(left[ileft++]);
 	  else
 	    results.push_back(right[iright++]);
-	while (ileft  < left.size() ) results.push_back(left [ileft++ ]);
-	while (iright < right.size()) results.push_back(right[iright++]);
+
+    compares++;
+  }
+	while (ileft < left.size()) {
+    results.push_back(left [ileft++]);
+    swaps++;
+  }
+
+	while (iright < right.size()) {
+    results.push_back(right[iright++]);
+    swaps++;
+  }
+
 	return results;
 }
 
@@ -351,14 +363,17 @@ int partition(vector<int> &values, int left, int right) {
     while(i <= j) {
         while(values[i] < pivotValue) {
             i++;
+            compares++;
         }
         while(values[j] > pivotValue) {
             j--;
+            compares++;
         }
         if(i <= j) {
             temp = values[i];
             values[i] = values[j];
             values[j] = temp;
+            swaps++;
             i++;
             j--;
         }
@@ -372,15 +387,20 @@ void heapify(vector<int> &testSet, int n, int i)
     int l = 2*i + 1;
     int r = 2*i + 2;
 
-    if (l < n && testSet[l] > testSet[largest])
+    if (l < n && testSet[l] > testSet[largest]) {
         largest = l;
+        compares++;
+    }
 
-    if (r < n && testSet[r] > testSet[largest])
+    if (r < n && testSet[r] > testSet[largest]) {
         largest = r;
+        compares++;
+    }
 
     if (largest != i)
     {
         swap(testSet[i], testSet[largest]);
+        swaps++;
 
         heapify(testSet, n, largest);
     }
